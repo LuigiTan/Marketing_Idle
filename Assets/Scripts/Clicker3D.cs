@@ -3,12 +3,18 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class Clicker3D : MonoBehaviour
 {
     [Header("References")]
     public Camera mainCamera;
     public GameObject clickableCube;
+    public Transform cubeViewPoint;       // Where the camera looks when facing the cube
+    public Transform goldViewPoint;       // Where the camera looks when facing the gold
+    public List<GameObject> goldBars;     // Gold bars that appear based on score
+
+    [Header("UI References")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI autoclickerUpgradeText;
     public TextMeshProUGUI autoclickerTimerText;
@@ -24,7 +30,9 @@ public class Clicker3D : MonoBehaviour
     private float timerUpgrade = 5f;
     private int timerCost = 20;
 
-    // Input system
+    private bool viewingGold = false;
+    private float cameraSpeed = 3f;
+
     private PlayerInputs playerInputs;
 
     private void Awake()
@@ -49,6 +57,10 @@ public class Clicker3D : MonoBehaviour
 
         if (winPanel != null)
             winPanel.SetActive(false);
+
+        // Hide all gold bars at start
+        foreach (var bar in goldBars)
+            bar.SetActive(false);
     }
 
     private void Update()
@@ -56,6 +68,8 @@ public class Clicker3D : MonoBehaviour
         HandleMouseClick();
         HandleUpgrades();
         HandleAutoClick();
+        HandleCameraSwitch();
+        HandleGoldBars();
         UpdateUI();
         HandleWinCondition();
     }
@@ -68,16 +82,14 @@ public class Clicker3D : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider.gameObject == clickableCube)
-                {
                     score++;
-                }
             }
         }
     }
 
     private void HandleUpgrades()
     {
-        // AutoClicker upgrade
+        // AutoClicker
         if (score >= upgradeCost)
         {
             autoclicker.color = Color.white;
@@ -88,12 +100,9 @@ public class Clicker3D : MonoBehaviour
                 autoClickerInst++;
             }
         }
-        else
-        {
-            autoclicker.color = Color.gray;
-        }
+        else autoclicker.color = Color.gray;
 
-        // Timer upgrade
+        // Timer Upgrade
         if (score >= timerCost)
         {
             autoclickerTimer.color = Color.white;
@@ -104,10 +113,7 @@ public class Clicker3D : MonoBehaviour
                 timerUpgrade = Mathf.Max(0.5f, timerUpgrade - 0.5f);
             }
         }
-        else
-        {
-            autoclickerTimer.color = Color.gray;
-        }
+        else autoclickerTimer.color = Color.gray;
     }
 
     private void HandleAutoClick()
@@ -120,6 +126,31 @@ public class Clicker3D : MonoBehaviour
                 score += autoClickerInst;
                 timer = 0f;
             }
+        }
+    }
+
+    private void HandleCameraSwitch()
+    {
+        if (playerInputs.Player.LookRight.triggered)
+            viewingGold = true;
+        if (playerInputs.Player.LookLeft.triggered)
+            viewingGold = false;
+
+        // Smooth camera movement between points
+        Transform target = viewingGold ? goldViewPoint : cubeViewPoint;
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, target.position, Time.deltaTime * cameraSpeed);
+        mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, target.rotation, Time.deltaTime * cameraSpeed);
+    }
+
+    private void HandleGoldBars()
+    {
+        // Example logic: reveal 1 gold bar per 50 score
+        for (int i = 0; i < goldBars.Count; i++)
+        {
+            if (score >= (i + 1) * 50)
+                goldBars[i].SetActive(true);
+            else
+                goldBars[i].SetActive(false);
         }
     }
 
