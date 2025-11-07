@@ -65,8 +65,30 @@
                 },
                 {
                     "name": "",
+                    "id": "24d0cf4e-184e-4cff-8a7b-ba3e7359c899",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b9d49f6d-9cc6-48df-a16b-cfbffd2ad6ae",
                     "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Upgrade",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f49a760-7b17-4c4e-8a6d-745dc76e4a0d",
+                    "path": "<Keyboard>/u",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -87,6 +109,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2abb8300-b111-415f-b59c-e1bad016b314",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Timer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d5b6c3d1-2a2c-4505-b1b2-e4c5009e9861",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -98,8 +131,30 @@
                 },
                 {
                     "name": "",
+                    "id": "2f63a9c5-ca0b-487e-9266-cbf2716a95e6",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e65cd329-0935-47bc-b351-36d234c18c9b",
                     "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2deee9c1-2e22-4d27-bced-cc8c783faa6c",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
